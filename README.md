@@ -1,6 +1,4 @@
-# RESTful API Node Server Boilerplate
-
-[![Build Status](https://app.travis-ci.com/obe711/node-server-boilerplate.svg?branch=main)](https://app.travis-ci.com/obe711/node-server-boilerplate)
+# Nabla DB Backup server
 
 A boilerplate/starter project for quickly building RESTful APIs using Node.js, Express, and Mongoose.
 
