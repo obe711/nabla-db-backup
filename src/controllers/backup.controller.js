@@ -27,7 +27,7 @@ const getBackup = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Backup not found');
   }
   const link = await awsService.getFirmwareDownloadLink(backup.file)
-  res.send({ link });
+  res.send({ link, file: backup.file });
 });
 
 
