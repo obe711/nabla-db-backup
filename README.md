@@ -3,9 +3,7 @@
 Mongodb Database backup server that stores gzip mongodump to AWS S3 bucket
 
 
-## Manual Installation
-
-If you would still prefer to do the installation manually, follow these steps:
+## Installation
 
 Clone the repo:
 
