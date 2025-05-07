@@ -1,8 +1,9 @@
+const config = require("../config/config")
 const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { mongodumpService, backupService, awsService } = require('../services');
+const { mongodumpService, backupService, spacesService } = require('../services');
 
 const createBackup = catchAsync(async (req, res) => {
   const backup = await backupService.createBackup(req.body);
@@ -26,7 +27,8 @@ const getBackup = catchAsync(async (req, res) => {
   if (!backup) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Backup not found');
   }
-  const link = await awsService.getFirmwareDownloadLink(backup.file)
+  // const link = await awsService.getFirmwareDownloadLink(backup.file)
+  const link = await spacesService.getFirmwareDownloadLink(config.s3.buckets.dbBackupBucket, backup.file)
   res.send({ link, file: backup.file });
 });
 

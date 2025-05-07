@@ -8,3 +8,4 @@ module.exports.googleService = require('./google.service');
 module.exports.backupService = require('./backup.service');
 module.exports.awsService = require('./aws.service');
 module.exports.mongodumpService = require('./mongodump.service');
+module.exports.spacesService = require("./spaces.service")

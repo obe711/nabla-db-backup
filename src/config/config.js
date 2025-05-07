@@ -39,6 +39,11 @@ const envVarsSchema = Joi.object()
     AWS_OTA_BUCKET: Joi.string().description('Aws ota bucket'),
     NABLA_DB_BACKUP_HOST: Joi.string().description('Nabla db backup host'),
     NABLA_DB_BACKUP_PORT: Joi.string().description('Nabla db backup port'),
+    SPACES_KEY: Joi.string().description('Digital Ocean spaces access key'),
+    SPACES_SECRET: Joi.string().description('Digital Ocean spaces secret key'),
+    SPACES_REGION: Joi.string().description('Digital Ocean spaces region'),
+    SPACES_ENDPOINT: Joi.string().description('Digital Ocean spaces endpoint'),
+    SPACES_DB_BACKUP_BUCKET: Joi.string().description('DB Backup bucket'),
   })
   .unknown();
 
@@ -102,5 +107,19 @@ module.exports = {
   nabla: {
     db_backup_host: envVars.NABLA_DB_BACKUP_HOST,
     db_backup_port: envVars.NABLA_DB_BACKUP_PORT,
-  }
+  },
+  s3: {
+    config: {
+      forcePathStyle: false, // Configures to use subdomain/virtual calling format.
+      endpoint: envVars.SPACES_ENDPOINT,
+      region: envVars.SPACES_REGION,
+      credentials: {
+        accessKeyId: envVars.SPACES_KEY,
+        secretAccessKey: envVars.SPACES_SECRET
+      }
+    },
+    buckets: {
+      dbBackupBucket: envVars.SPACES_DB_BACKUP_BUCKET
+    }
+  },
 };

@@ -1,6 +1,6 @@
 
 const { spawn } = require('child_process');
-const { uploadStream } = require('./aws.service');
+const { uploadStream } = require('./spaces.service');
 const { updateBackup } = require('./backup.service');
 const config = require('../config/config');
 const logger = require('../config/logger');
@@ -26,7 +26,7 @@ const createMongodump = async (backupDoc, host = null, port = null) => {
   });
 
   try {
-    await uploadStream(backupDoc.file, mongodump.stdout, config.aws.backup_bucket);
+    await uploadStream(backupDoc.file, mongodump.stdout, config.s3.buckets.dbBackupBucket);
   } catch {
     updateBackup(backupDoc._id, { status: 'failed' });
     logger.error("aws error");
