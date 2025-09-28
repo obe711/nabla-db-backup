@@ -39,9 +39,40 @@ const deleteBackup = {
   }),
 };
 
+// V2
+
+const getDatabaseByName = {
+  params: Joi.object().keys({
+    dbName: Joi.string().required()
+  })
+}
+
+const createBackupV2 = {
+  body: Joi.object().keys({
+    db: Joi.string().required(),
+    user: Joi.string().custom(objectId),
+    ip: Joi.string().default("localhost")
+  }),
+};
+
+const getBackupsV2 = {
+  query: Joi.object().keys({
+    db: Joi.string().allow(''),
+    startDate: Joi.string().allow(''),
+    endDate: Joi.string().allow(''),
+    sortBy: Joi.string(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+  }),
+};
+
 module.exports = {
   createBackup,
   getBackups,
   getBackup,
   deleteBackup,
+  // V2
+  createBackupV2,
+  getDatabaseByName,
+  getBackupsV2
 };

@@ -17,13 +17,13 @@ const backupSchema = mongoose.Schema(
     user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',
-      required: true,
+      default: new mongoose.Types.ObjectId()
     },
     ip: {
       type: String,
       trim: true,
       lowercase: true,
-      required: true,
+      default: "localhost"
     },
     userCount: {
       type: Number,

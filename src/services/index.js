@@ -9,3 +9,5 @@ module.exports.backupService = require('./backup.service');
 module.exports.awsService = require('./aws.service');
 module.exports.mongodumpService = require('./mongodump.service');
 module.exports.spacesService = require("./spaces.service")
+module.exports.mongoService = require("./mongo.service")
+module.exports.scheduleService = require("./schedule.service")
