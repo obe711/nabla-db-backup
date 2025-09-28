@@ -33,9 +33,14 @@ const updateBackup = async (backupId, updateBody) => {
   return updated;
 }
 
+const deleteBackup = async (backupId) => {
+  return Backup.findByIdAndDelete(backupId);
+}
+
 module.exports = {
   createBackup,
   updateBackup,
   queryBackups,
-  getBackupById
+  getBackupById,
+  deleteBackup
 }

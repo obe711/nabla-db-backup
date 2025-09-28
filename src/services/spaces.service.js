@@ -2,7 +2,7 @@
 
 const { Upload } = require('@aws-sdk/lib-storage');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
-const { S3, GetObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
+const { S3, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const config = require('../config/config');
 
 
@@ -114,6 +114,22 @@ const getSignedDownloadLink = (bucket, fileName, exp = 3000) => {
   return getSignedUrl(s3, command, { expiresIn: 3600 });
 };
 
+const deleteFile = async (bucket, objectKey) => {
+  try {
+    const command = new DeleteObjectCommand({
+      Bucket: bucket,
+      Key: objectKey
+    });
+
+    const response = await s3.send(command);
+    console.log(`Successfully deleted object: ${objectKey} from bucket: ${bucket}`);
+    return response;
+  } catch (error) {
+    console.error('Error deleting object from S3:', error);
+    throw error;
+  }
+}
+
 module.exports = {
   s3,
   downloadStream,
@@ -122,5 +138,6 @@ module.exports = {
   listAllObjects,
   getFileList,
   getFoldersAndFilesList,
-  getSignedDownloadLink
+  getSignedDownloadLink,
+  deleteFile
 };
