@@ -1,13 +1,13 @@
 {
   "name": "nabla-db-backup",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Nabla Node database backup server",
   "main": "src/index.js",
   "repository": "https://github.com/obe711/nabla-db-backup",
   "author": "Obediah Klopfenstein <obe711@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon src/index.js",
@@ -64,7 +64,7 @@
     "joi": "^17.9.1",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
-    "mongoose": "^7.1.1",
+    "mongoose": "^8.18.2",
     "morgan": "^1.10.0",
     "node-rsa": "^1.1.1",
     "nodemailer": "^6.9.1",
