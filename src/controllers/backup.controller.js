@@ -63,11 +63,23 @@ const getBackupsV2 = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const deleteBackup = catchAsync(async (req, res) => {
+  const dbDeleted = await backupService.deleteBackup(req.params.backupId);
+  if (dbDeleted?.file) {
+    await spacesService.deleteFile(config.s3.buckets.dbBackupBucket, dbDeleted.file);
+  }
+  if (req.query?.file) {
+    await spacesService.deleteFile(config.s3.buckets.dbBackupBucket, req.query.file);
+  }
+  res.status(httpStatus.NO_CONTENT).send();
+})
+
 
 module.exports = {
   createBackup,
   getBackups,
   getBackup,
   createBackupV2,
-  getBackupsV2
+  getBackupsV2,
+  deleteBackup
 };

@@ -37,6 +37,9 @@ const deleteBackup = {
   params: Joi.object().keys({
     backupId: Joi.string().custom(objectId),
   }),
+  query: Joi.object().keys({
+    file: Joi.string().optional()
+  })
 };
 
 // V2

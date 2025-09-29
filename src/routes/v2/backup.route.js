@@ -13,6 +13,7 @@ router
 
 router
   .route('/:backupId')
-  .get(auth(), validate(backupValidation.getBackup), backupController.getBackup);
+  .get(auth(), validate(backupValidation.getBackup), backupController.getBackup)
+  .delete(auth(), validate(backupValidation.deleteBackup), backupController.deleteBackup);
 
 module.exports = router;
