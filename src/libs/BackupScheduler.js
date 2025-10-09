@@ -32,7 +32,7 @@ class BackupJob {
   _runJob = async () => {
     try {
       await this._createBackup();
-      this.scheduler.onComplete(this.id);
+      this.scheduler.onComplete(this.db);
     } catch (err) {
       console.error(err);
     }
@@ -73,17 +73,17 @@ class BackupScheduler extends EventEmitter {
 
   // create new job
   scheduleBackup(backup) {
-    if (!backup?.id) {
+    if (!backup?.db) {
       console.error("scheduleBackup - Missing backup ID");
       this.error = true;
       return;
     }
-    const previousSchedule = this.map.get(backup.id);
+    const previousSchedule = this.map.get(backup.db);
     if (previousSchedule) {
       previousSchedule.job.stop();
     }
     const job = new BackupJob(this, backup);
-    this.map.set(backup.id, { backup, job });
+    this.map.set(backup.db, { backup, job });
     console.log("Backup scheduled", backup.db, backup?.nextBackup)
   }
 
@@ -94,10 +94,18 @@ class BackupScheduler extends EventEmitter {
     })
   }
 
-  // Event callback
-  onComplete = async (id) => {
+  removeSchedule = (db) => {
     try {
-      const completed = this.map.get(id);
+      const scheduled = this.map.get(db);
+      scheduled.job.stop();
+      this.map.delete(db);
+    } catch (err) { console.error(err) }
+  }
+
+  // Event callback
+  onComplete = async (db) => {
+    try {
+      const completed = this.map.get(db);
       if (!completed) {
         console.error("Schedule not found:", id);
       }
@@ -112,7 +120,7 @@ class BackupScheduler extends EventEmitter {
           nextBackup = this.createTargetDate(interval, day, hour);
         }
 
-        const updated = await scheduleService.updateById(id, { nextBackup })
+        const updated = await scheduleService.updateByDb(db, { nextBackup })
         // schedule new job
         this.scheduleBackup(updated);
       }

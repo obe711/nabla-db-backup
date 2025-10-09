@@ -12,6 +12,10 @@ const updateById = (id, update) => {
   return Schedule.findByIdAndUpdate(id, update, { new: true })
 }
 
+const updateByDb = (db, update) => {
+  return Schedule.findByOneAndUpdate({ db }, update, { new: true })
+}
+
 const getByName = (db) => {
   return Schedule.findOne({ db });
 }
@@ -24,6 +28,7 @@ module.exports = {
   createSchedule,
   getAllSchedules,
   updateById,
+  updateByDb,
   getByName,
   deleteByName
 }
